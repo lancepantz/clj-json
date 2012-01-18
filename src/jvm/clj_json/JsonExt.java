@@ -4,20 +4,16 @@ import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonGenerator;
 import java.math.BigInteger;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import clojure.lang.IFn;
-import clojure.lang.ISeq;
-import clojure.lang.IPersistentMap;
-import clojure.lang.IPersistentVector;
-import clojure.lang.IMapEntry;
 import clojure.lang.Keyword;
 import clojure.lang.PersistentArrayMap;
 import clojure.lang.PersistentVector;
 import clojure.lang.ITransientMap;
-import clojure.lang.IPersistentList;
 import clojure.lang.ITransientCollection;
-import clojure.lang.Seqable;
 
 public class JsonExt {
     public static class Generator {
@@ -64,26 +60,17 @@ public class JsonExt {
                 jg.writeNull();
             } else if (obj instanceof Keyword) {
                 jg.writeString(((Keyword) obj).getName());
-            } else if (obj instanceof IPersistentMap) {
-                IPersistentMap map = (IPersistentMap) obj;
-                ISeq mSeq = map.seq();
+            } else if (obj instanceof Map) {
+                Map<?,?> map = (Map<?,?>) obj;
                 jg.writeStartObject();
-                while (mSeq != null) {
-                    IMapEntry me = (IMapEntry) mSeq.first();
-                    Object key = me.key();
+                for (Map.Entry<?,?> me : map.entrySet()) {
+                    Object key = me.getKey();
                     if (key instanceof Keyword) {
                         jg.writeFieldName(((Keyword) key).getName());
-                    } else if (key instanceof Integer) {
-                        jg.writeFieldName(((Integer) key).toString());
-                    } else if (key instanceof BigInteger) {
-                        jg.writeFieldName(((BigInteger) key).toString());
-                    } else if (key instanceof Long) {
-                        jg.writeFieldName(((Long) key).toString());
                     } else {
-                        jg.writeFieldName((String) key);
+                        jg.writeFieldName(key.toString());
                     }
-                    generate(me.val());
-                    mSeq = mSeq.next();
+                    generate(me.getValue());
                 }
                 jg.writeEndObject();
             } else if (obj instanceof Iterable) {
