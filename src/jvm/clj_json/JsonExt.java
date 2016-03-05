@@ -1,8 +1,8 @@
 package clj_json;
 
-import org.codehaus.jackson.JsonToken;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonGenerator;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonGenerator;
 import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.Map;

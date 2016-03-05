@@ -5,4 +5,4 @@
   :java-source-paths ["src/jvm"]
   :javac-fork "true"
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [org.codehaus.jackson/jackson-core-asl "1.9.9"]])
+                 [com.fasterxml.jackson.core/jackson-core "2.7.2"]])

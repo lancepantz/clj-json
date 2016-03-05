@@ -1,6 +1,6 @@
 (ns clj-json.core
   (:import (clj_json JsonExt)
-           (org.codehaus.jackson JsonFactory JsonParser JsonParser$Feature)
+           (com.fasterxml.jackson.core JsonFactory JsonParser JsonParser$Feature)
            (java.io Writer StringWriter StringReader BufferedReader))
   (:use (clojure [walk :only (postwalk)]
                  [string :only (join)])))
